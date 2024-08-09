@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback  } from 'react'
 import { apiSetStorage, apiObjGetStorage, apiObjSetStorage } from '../utils/api'
 import { unique } from 'shorthash'
+import { pad } from '../utils/obj-functions'
 
 const MediaPlayerContext = React.createContext([{}, () => {}])
 const MediaPlayerProvider = (props) => {
@@ -10,6 +11,32 @@ const MediaPlayerProvider = (props) => {
   const setStateKeyVal = (key,val) => setState(state => ({ ...state, [key]: val }))
 
   const [isPaused, setIsPaused] = useState(false)
+  const [imgPos, setImgPos] = useState({});
+
+  const fetchJSONDataFrom = useCallback(async (inx) => {
+    const response = await fetch(`data/img_pos${pad(inx +1)}.json`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    });
+    const data = await response.json();
+    setImgPos((prev) => ({
+      ...prev,
+      [inx]: data,
+    }));
+  }, []);
+
+  useEffect(() => {
+    const getDataForAllStories = async () => {
+      const maxStories = 50
+      for(let i=0; i < maxStories; i++) {
+        // Wait for each task to finish
+        await fetchJSONDataFrom(i);
+      }      
+    }
+    getDataForAllStories()
+  }, [fetchJSONDataFrom]);
 
   const togglePlay = () => {
 //    state.isPlaying ? player.pause() : player.play()
@@ -49,7 +76,16 @@ console.log("onFinishedPlaying")
   }
 
   const updateImgBasedOnPos = ( curInx, msPos ) => {
-    return ``
+    let checkMsPosArray = []
+    if (imgPos) {
+      checkMsPosArray = imgPos[ curInx ]
+    }
+    let retImgSrc = `${pad(curInx+1)}-01`
+    checkMsPosArray?.map(checkObj => {
+      const checkMs = parseInt(checkObj.pos) * 1000
+      if (msPos>=checkMs) retImgSrc = checkObj.img
+    })
+    return `obsIcons/obs-en-${retImgSrc}.jpg`
   }
 
   const onPlaying = (curPos) => {

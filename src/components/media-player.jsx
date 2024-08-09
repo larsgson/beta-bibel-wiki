@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Fab from '@mui/material/Fab'
 import NavClose from '@mui/icons-material/Close'
 import VideoPlayer from './video'
+import { PlayerInfo } from '../components/player-info'
+import Sound from './sound'
 import useMediaPlayer from "../hooks/useMediaPlayer"
 import useBrowserData from '../hooks/useBrowserData'
 import { useTranslation } from 'react-i18next'
@@ -64,8 +66,8 @@ const Footer = () => {
   const player = useMediaPlayer()
   const { t } = useTranslation()
   const { curPlay,
-          onStopPlaying, onPlaying, onFinishedPlaying,
-          isPaused} = player
+          onStopPlaying, setIsPaused, onPlaying, onFinishedPlaying,
+          isPaused, isWaitingForPlayInfo} = player
   let tmpPlay = player.curPlay
   if (!tmpPlay) tmpPlay = {curSerie: undefined, curEp: undefined}
   const {curSerie,curEp} = tmpPlay
@@ -81,6 +83,36 @@ const Footer = () => {
   const [curDur, setCurDur] = useState()
   const storePos = (msPos) => apiObjSetStorage(curPlay,"mSec",msPos)
   const ytbURL = t("videoURL.YT")
+  const restorePos = async (obj) => {
+    await apiObjGetStorage(obj,"mSec").then((value) => {
+      if (value==null){
+        value=0
+      }
+      if ((obj!=null)&&(obj.curSerie!=null)&&(obj.curSerie.episodeList!=null)
+          &&(obj.curEp!=null)&&((obj.curSerie.episodeList.length-1)===obj.curEp.id)){
+        apiObjGetStorage(obj,"mSecDur").then((dur) => {
+          const marginSec = 3 // minimum sec for play - else repeat from beginning
+          if (value+(marginSec*1000)>dur){
+            value = 0
+          }
+          setStartPos(value)
+          setCurMsPos(value)
+        })
+      } else {
+        setStartPos(value)
+        setCurMsPos(value)
+      }
+    }).catch((err) => {
+      console.error(err)
+    })
+  }
+  useEffect(() => {
+    if (curPlay!=null){
+      setHasFinishedPlay(false)
+      restorePos(curPlay)
+    }
+  },[curPlay,curEp])
+
   useEffect(() => {
     let didCancel = false
     const restorePos = async (obj) => {
@@ -111,6 +143,18 @@ const Footer = () => {
 console.log(curMsPos)
     storePos(curMsPos)
     if (onStopPlaying) onStopPlaying()
+  }
+
+  const movePos = (percent) => {
+    if (percent!=null){
+      let newPos = 0
+      if (curDur!=null){
+        newPos = Math.floor(percent * curDur / 100) // Divide by 100 in order to get promille - i.e. milliseconds
+      }
+      setHasFinishedPlay(false)
+      setStartPos(newPos)
+      setCurMsPos(newPos)
+    }
   }
 
   const handleVideoDuration = (dur) => {
@@ -198,24 +242,27 @@ console.log("handleFinishedPlaying")
   if (curDur!=null) useDur = Math.floor(curDur / 1000)
   let locURL = ""
   let locPath = ""
-  let videoFound = false
+  let curPlayState = isPaused ? Sound.status.PAUSED : Sound.status.PLAYING
+  const typeFound = (type) => {
+    if (curEp && curEp.mediaType) return curEp.mediaType===type
+    return (curSerie &&(curSerie.mediaType===type))
+  }
+  const videoFound = typeFound("vid")
+  const audioFound = typeFound("audio")
   const btnStyle =  Object.assign({}, styles.floatingButton)
   let idStr = "footer"
   if ((curPlay!=null)) {
-    if (curEp!=null) {
-//      locURL = curEp.filename
-        locURL = ytbURL
-        locPath = locURL
-    } else if ((curSerie!=null)&&(curSerie.curPath!=null)) {
-      locURL = ytbURL
-    }
-//    locPath = getLocalMediaFName(locURL)
     locPath = locURL
-    const typeFound = (type) => {
-      if (curEp && curEp.mediaType) return curEp.mediaType===type
-      return (curSerie &&(curSerie.mediaType===type))
+    if (videoFound && (curEp!=null)) {
+      locURL = ytbURL
+      locPath = locURL
+    } else if ((curEp!=null)&&(curEp.filename!=null)) {
+      locURL = curEp.filename
+    } else if ((curSerie!=null)&&(curSerie.curPath!=null)) {
+      locURL = curSerie.URL
     }
-    videoFound = typeFound("vid")
+    locPath = locURL
+//    locPath = getLocalMediaFName(locURL)
   }
   if (videoFound){
     idStr = "footer-video"
@@ -224,11 +271,35 @@ console.log("handleFinishedPlaying")
   const isFB = curEp && curEp.fb
   const position = 'relative'
   const top = '0px'
-  if (locURL.length>0) {
+  if (locURL?.length>0) {
     return (
       <footer
         id={idStr}
         style={isFB ?  styles.footerFB : videoFound ? styles.footerVideo : fullSizeFound ? styles.footerFullsize : styles.footer}>
+        {audioFound && (<div>
+          <Sound
+            url={locPath}
+            autoPlay
+            playStatus={curPlayState}
+            playFromPosition={startPos}
+            onLoading={handleLoading}
+            onPlaying={handlePlaying}
+            onStop={handleStop}
+            onFinishedPlaying={handleFinishedPlaying} />
+          <PlayerInfo
+            containerWidth={width}
+            curSec={useSec}
+            curDur={useDur}
+            isPaused={isPaused}
+            isWaitingForPlayInfo={isWaitingForPlayInfo}
+            episode={curPlay.curEp}
+            serie={curPlay.curSerie}
+            onSetPaused={handleSetPaused}
+            url={locPath}
+            downloadName={downloadName}
+            onMovePosCallback={movePos}
+            onCloseCallback={closeFooter} />
+        </div>)}
         <div style={{position, top: top, height: '80%', width: '100%', maxWidth: isFB ? 450 : width}}>
           <Fab
             size="small"
@@ -261,12 +332,11 @@ console.log("handleFinishedPlaying")
        </footer>
     )
   }
-
 }
 
 export const MediaPlayer = (props) => {
   const [isWaitingForPlayInfo, setIsWaitingForPlayInfo] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
+  const [isPaused, setIsPaused] = useState(true)
   const [curCheckPos, setCurCheckPos] = useState(undefined)
   const [curPos, setCurPos] = useState()
   const player = useMediaPlayer()
