@@ -6,6 +6,7 @@ import { BrowserDataProvider } from "./context/browser-data-context"
 import BibleviewerApp from './components/bible-viewer-app'
 import { MediaPlayerProvider } from "./context/media-player-context"
 import MediaPlayer from './components/media-player'
+// import OBSPictureNavigationApp from './components/obs-viewer-app'
 
 const App = () => {
 
