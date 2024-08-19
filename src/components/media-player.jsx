@@ -82,37 +82,38 @@ const Footer = () => {
   const [curPos, setCurPos] = useState()
   const [curDur, setCurDur] = useState()
   const storePos = (msPos) => apiObjSetStorage(curPlay,"mSec",msPos)
+  // const ytbURL = "https://www.youtube.com/watch?v=xEK-0n88zSI" // English
+  // const ytbURL = "https://www.youtube.com/watch?v=MpGiPo8UuVk" // Deutsch / German
   const ytbURL = t("videoURL.YT")
-  const restorePos = async (obj) => {
-    await apiObjGetStorage(obj,"mSec").then((value) => {
-      if (value==null){
-        value=0
-      }
-      if ((obj!=null)&&(obj.curSerie!=null)&&(obj.curSerie.episodeList!=null)
-          &&(obj.curEp!=null)&&((obj.curSerie.episodeList.length-1)===obj.curEp.id)){
-        apiObjGetStorage(obj,"mSecDur").then((dur) => {
-          const marginSec = 3 // minimum sec for play - else repeat from beginning
-          if (value+(marginSec*1000)>dur){
-            value = 0
-          }
-          setStartPos(value)
-          setCurMsPos(value)
-        })
-      } else {
-        setStartPos(value)
-        setCurMsPos(value)
-      }
-    }).catch((err) => {
-      console.error(err)
-    })
-  }
-  useEffect(() => {
-    if (curPlay!=null){
-      setHasFinishedPlay(false)
-      restorePos(curPlay)
-    }
-  },[curPlay,curEp])
-
+  // const restorePos = async (obj) => {
+  //   await apiObjGetStorage(obj,"mSec").then((value) => {
+  //     if (value==null){
+  //       value=0
+  //     }
+  //     if ((obj!=null)&&(obj.curSerie!=null)&&(obj.curSerie.episodeList!=null)
+  //         &&(obj.curEp!=null)&&((obj.curSerie.episodeList.length-1)===obj.curEp.id)){
+  //       apiObjGetStorage(obj,"mSecDur").then((dur) => {
+  //         const marginSec = 3 // minimum sec for play - else repeat from beginning
+  //         if (value+(marginSec*1000)>dur){
+  //           value = 0
+  //         }
+  //         setStartPos(value)
+  //         setCurMsPos(value)
+  //       })
+  //     } else {
+  //       setStartPos(value)
+  //       setCurMsPos(value)
+  //     }
+  //   }).catch((err) => {
+  //     console.error(err)
+  //   })
+  // }
+  // useEffect(() => {
+  //   if (curPlay!=null){
+  //     setHasFinishedPlay(false)
+  //     restorePos(curPlay)
+  //   }
+  // },[curPlay,curEp])
   useEffect(() => {
     let didCancel = false
     const restorePos = async (obj) => {
@@ -138,6 +139,48 @@ const Footer = () => {
     }
     return () => didCancel = true
   },[curPlay,curEp])
+
+  // Reset if less than 3 sec remaining
+  // if (value==null){
+  //   value=0
+  // }
+  // if ((obj!=null)&&(obj.curSerie!=null)&&(obj.curSerie.episodeList!=null)
+  //     &&(obj.curEp!=null)&&((obj.curSerie.episodeList.length-1)===obj.curEp.id)){
+  //   apiObjGetStorage(obj,"mSecDur").then((dur) => {
+  //     const marginSec = 3 // minimum sec for play - else repeat from beginning
+  //     if (value+(marginSec*1000)>dur){
+  //       value = 0
+  //     }
+  //     setStartPos(value)
+  //     setCurMsPos(value)
+  //   })
+  
+  //  Previous version here
+  //  useEffect(() => {
+  //   let didCancel = false
+  //   const restorePos = async (obj) => {
+  //     await apiObjGetStorage(obj,"mSec").then((value) => {
+  //       if (value==null) {
+  //         if ((obj.curSerie!=null) && (obj.curEp!=null)) {
+  //           value = curEp.begTimeSec * 1000
+  //         } else {
+  //           value=0
+  //         }
+  //       }
+  //       if (!didCancel) {
+  //         setStartPos(value)
+  //         setCurMsPos(value)
+  //       }
+  //     }).catch((err) => console.error(err))
+  //     await apiObjGetStorage(obj,"mSecDur").then((dur) => {
+  //       if (!didCancel) setCurDur(dur)
+  //     }).catch((err) => console.error(err))
+  //   }
+  //   if ((curSerie!=null) && (curEp!=null)){
+  //     restorePos({curSerie, curEp})
+  //   }
+  //   return () => didCancel = true
+  // },[curPlay,curEp])
 
   const closeFooter = () => {
 console.log(curMsPos)
