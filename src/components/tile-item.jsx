@@ -20,9 +20,7 @@ const TileItem = (props) => {
   useEffect(() => {
     // Initial default
     setPercentVal(0)
-console.log(percentVal)
     setEpDescr("")
-console.log(epDescr)
   }, [])
   useEffect(() => {
     if (nbrOfEp!=null && curEpInx!=null) {
