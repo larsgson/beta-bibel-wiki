@@ -100,7 +100,7 @@ export const osisFromAudioId = (checkStr) => {
   let retId
   if ((checkStr!=null) && (checkStr.length===3)){
     const letter = checkStr[0].toUpperCase()
-    const inxStr = checkStr.substr(1,2)
+    const inxStr = checkStr.slice(1,3)
     const inx = parseInt(inxStr)
     if ((inx!=null)&& (inx>0)) {
       if ((letter==="A") && (inx <= nbrBooksInOT)) {

@@ -45,7 +45,7 @@ const exceptionList = {
 
 export const osisFreeAudiobibleId = osisId.map(id => {
   if (id==="Judg") id="JDG"
-  let retId = id.substr(0,3).toUpperCase()
+  let retId = id.slice(0,3).toUpperCase()
   if (exceptionList[retId]!=null){
     retId = exceptionList[retId]
   }

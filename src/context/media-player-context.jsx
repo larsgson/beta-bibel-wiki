@@ -64,6 +64,9 @@ console.log("onFinishedPlaying")
             newPlayObj.curEp=curSerie.episodeList[epInx]
           }
           setStateKeyVal( "curPlay", newPlayObj)
+        } else {
+          let newPlayObj
+          setStateKeyVal( "curPlay", newPlayObj)
         }
       }
     }

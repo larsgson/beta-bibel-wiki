@@ -12,7 +12,9 @@ import { osisIconId, osisIconList } from '../constants/osisIconList'
 import { getOsisChTitle, getChoiceTitle } from '../constants/osisChTitles'
 import useBrowserData from '../hooks/useBrowserData'
 // import useMediaPlayer from "../hooks/useMediaPlayer"
-import { bibleData } from '../constants/bibleData'
+// import { bibleData } from '../constants/bibleData'
+// import { bibleDataDE_TJ_HJ } from '../constants/bibleData'
+import { bibleDataDE_ML_1912 } from '../constants/bibleData'
 import { naviSortOrder, chInBook,
           naviBooksLevel1, naviBooksLevel2, naviChapters } from '../constants/naviChapters'
 
@@ -34,7 +36,7 @@ const BibleNavigation = (props) => {
   const { t } = useTranslation()
   const { onExitNavigation, onStartPlay, onClickGospelJohn } = props
   // const curSerie = (curPlay!=null) ? curPlay.curSerie : undefined
-  const curSerie = bibleData
+  const curSerie = bibleDataDE_ML_1912
   const [curLevel, setCurLevel] = useState(1)
   const [level1, setLevel1] = useState(1)
   const [level2, setLevel2] = useState("")
@@ -52,7 +54,7 @@ const BibleNavigation = (props) => {
     const exceptionBook = ["1Sam","2Sam","1Kgs","2Kgs","1Chr","2Chr"]
     let bookNameEng = t(osisId, { lng: 'en' })
     if (exceptionBook.indexOf(osisId)>=0){
-      bookNameEng = bookNameEng.substr(2,bookNameEng.length)
+      bookNameEng = bookNameEng.slice(2,2+bookNameEng.length)
     }
     return bookNameEng.replace(/ /g,"-").toLowerCase()
   }
@@ -92,7 +94,7 @@ const BibleNavigation = (props) => {
       checkTitle = t(checkIcon)
     }
     imgSrc = preNav +checkIcon +".png"
-    const title = (ch!=null) ? getOsisChTitle(bk,ch) : checkTitle
+    let title = (ch!=null) ? getOsisChTitle(bk,ch) : checkTitle
     let subtitle
     if (bk==null){ // level 1 and 2
       const checkStr = checkIcon + "-descr"
@@ -104,7 +106,10 @@ const BibleNavigation = (props) => {
         subtitle = (beg===end) ? beg : beg + " - " + end
       }
       const choiceTitle = getChoiceTitle(bk,key+1)
-      if (choiceTitle!=null) subtitle += " " + choiceTitle
+      if (choiceTitle!=null) {
+        title += " " + subtitle
+        subtitle = choiceTitle
+      }
     }
     return {
       imgSrc,
@@ -135,7 +140,7 @@ const BibleNavigation = (props) => {
       setCurLevel(4)
     } else {
       const bookObj = naviChapters[level1][level2][level3]
-      // const {curSerie} = curPlay
+      // const {curSerie} = curPlay  
       onStartPlay(curSerie,bookObj,id)
     }
   }
