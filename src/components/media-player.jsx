@@ -87,9 +87,8 @@ const Footer = () => {
   const [curPos, setCurPos] = useState()
   const [curDur, setCurDur] = useState()
   const storePos = (msPos) => apiObjSetStorage(curPlay,"mSec",msPos)
-  // const ytbURL = "https://www.youtube.com/watch?v=xEK-0n88zSI" // English
+  const ytbURL = "https://www.youtube.com/watch?v=xEK-0n88zSI" // English
   // const ytbURL = "https://www.youtube.com/watch?v=MpGiPo8UuVk" // Deutsch / German
-  const ytbURL = t("videoURL.YT")
   // const restorePos = async (obj) => {
   //   await apiObjGetStorage(obj,"mSec").then((value) => {
   //     if (value==null){
@@ -315,7 +314,7 @@ console.log("handleFinishedPlaying")
     }
     locPath = locURL
     if (videoFound && (curEp!=null)) {
-      locURL = ytbURL
+      locURL = curSerie?.listYtbURL[curSerie?.language]
       locPath = locURL
     } else if ((curEp!=null)&&(curEp.filename!=null)) {
       locURL = curEp.filename

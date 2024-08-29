@@ -17,7 +17,7 @@ const defaultBackgroundStyle = {
   color: 'whitesmoke',
 }
 
-const OBSPictureNavigationApp = () => {
+const OBSPictureNavigationApp = ({onClose}) => {
   const mPlayObj = useMediaPlayer()
   const { startPlay, isPaused, syncImgSrc } = mPlayObj
 
@@ -35,7 +35,7 @@ return (
         <OBSNavigation
           isPaused={isPaused}
           onReset={() => console.log("onReset")}
-          onExitNavigation={() => console.log("onExitNavigation")}
+          onExitNavigation={onClose}
           onStartPlay={handleStartBiblePlay}
           syncImgSrc={syncImgSrc}
         />

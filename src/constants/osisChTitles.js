@@ -7,18 +7,18 @@ export const bookWithChoices = {
   John: 3,
 };
 
-export const getChoiceTitle = (book, menuInx) => {
+export const getChoiceTitle = (book, menuInx, lng) => {
   let retVal;
   if (bookWithChoices[book] != null) {
     const useKey = `${book}.Choice.${menuInx}`;
-    retVal = i18n.t(useKey);
+    retVal = i18n.t(useKey, {lng});
   }
   return retVal;
 };
 
-export const getOsisChTitle = (book, chapter) => {
+export const getOsisChTitle = (book, chapter, lng) => {
   const useKey = `${book}.${chapter}`;
-  return i18n.t(useKey);
+  return i18n.t(useKey, {lng});
 };
 
 // export const osisChTitles = {

@@ -15,7 +15,7 @@ import { verseSec } from '../constants/TimeCodes'
 import { verseSumCh } from '../constants/naviChaptersJohn'
 
 const EpList = (props) => {
-  const { serie, navButton, useIcon, epList, imgSrc } = props
+  const { serie, navButton, useIcon, epList, imgSrc, lng } = props
   const [expanded,setExpanded] = useState(!navButton)
   const {size, width, height} = useBrowserData()
   const { t } = useTranslation()
@@ -82,10 +82,10 @@ const EpList = (props) => {
                 serie={serie}
                 episode={ep}
                 useIcon={useIcon}
-                title={t(ep.title)}
+                title={t(ep.title,{lng})}
                 onClick={(ev) => handleClickItemIndex(ev,serie,ep)}/>
               {(width<480) && false && (
-                <Typography>{t(ep.descr)}</Typography>)}
+                <Typography>{t(ep.descr,{lng})}</Typography>)}
             </ImageListItem>
           )}
         )}

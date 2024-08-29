@@ -3,8 +3,8 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-// import IconButton from '@mui/material/IconButton'
-// import PlaylistPlay from '@mui/icons-material/PlaylistPlay'
+import IconButton from '@mui/material/IconButton'
+import ChevronLeft from '@mui/icons-material/ChevronLeft'
 import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import useBrowserData from '../hooks/useBrowserData'
@@ -40,7 +40,9 @@ Item.propTypes = {
 
 const CustomAppBar = (props) => {
   const { t } = useTranslation()
+  const { onClose, lng } = props
   const { size } = useBrowserData()
+  const handleClose = () => onClose && onClose()
   // const onClickMenu = () => console.log("onClickMenu")
   return (
     <AppBar
@@ -55,10 +57,11 @@ const CustomAppBar = (props) => {
               m: 1,
             }}>
             <Item>
-              <img
-                src={'/icon/logo-bplus-mobile.svg'}
-                alt=""
-                style={{height: 52}} />
+              <IconButton
+                sx={{color: 'white',backgroundColor: 'lightblue'}}
+                onClick={handleClose}>
+                <ChevronLeft/>
+              </IconButton>
             </Item>
             <Item>
               <Typography
@@ -70,7 +73,7 @@ const CustomAppBar = (props) => {
                   }}
                 color="inherit"
               >
-                {t("JohnLongTitle")}
+                {t("JohnLongTitle",{lng})}
               </Typography>
             </Item>
             <Item>

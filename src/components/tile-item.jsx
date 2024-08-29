@@ -8,7 +8,7 @@ import useMediaPlayer from "../hooks/useMediaPlayer"
 import { useTranslation } from 'react-i18next'
 
 const TileItem = (props) => {
-  const {item,epList,expanded,mTop} = props
+  const {item,epList,expanded,mTop,lng} = props
   const {width, height} = useBrowserData()
   const {curPlay} = useMediaPlayer()
   const { t } = useTranslation()
@@ -35,7 +35,7 @@ const TileItem = (props) => {
     if (serieCurEp!=null && nbrOfEp>1) {
       let tempEpDescr = serieCurEp.id+1
       if (serieCurEp.title!=null) {
-        tempEpDescr = t(serieCurEp.title)
+        tempEpDescr = t(serieCurEp.title,{lng})
       }
       setEpDescr(<div style={subtitleStyle}><br/>{tempEpDescr}</div>)
     }
@@ -73,6 +73,7 @@ const TileItem = (props) => {
   return (
   <div>
     <InfoTileItem
+      lng={lng}
       item={item}
       curEp={serieCurEp}
       mTop={mTop}
@@ -83,6 +84,7 @@ const TileItem = (props) => {
       onClickExpand={(e) => props.onClickExpand(e)}
     />
     <EpList
+      lng={lng}
       epList={epList}
       multiRow
       onClick={(ev,ser,ep) => console.log(ep)}

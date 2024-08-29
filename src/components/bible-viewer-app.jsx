@@ -28,16 +28,16 @@ const defaultBackgroundStyle = {
   color: 'whitesmoke',
 }
 
-const BibleviewerApp = () => {
+const BibleviewerApp = ({onClose,lng}) => {
   const { startPlay, curPlay } = useMediaPlayer()
   const { size, width, height } = useBrowserData()
   const { t } = useTranslation()
   const isPlaying = !isEmptyObj(curPlay)
   const [showBiblePassage,setShowBiblePassage] = useState(false)
   const [completedList,setCompletedList] = useState([])
-  const curSerie = gospelOfJohnObjBPlus
-  const nbrEpisodes = gospelOfJohnObjBPlus.episodeList.length
-  const firstDateOfPlan = Date.parse(gospelOfJohnObjBPlus.beginDate)
+  const curSerie = {...gospelOfJohnObjBPlus, language: lng}
+  const nbrEpisodes = curSerie.episodeList.length
+  const firstDateOfPlan = Date.parse(curSerie.beginDate)
   const dateNow = Date.now()
   const daysDiff = differenceInCalendarDays(dateNow,firstDateOfPlan)
   const daysSinceFirst = daysDiff <= nbrEpisodes ? daysDiff : nbrEpisodes
@@ -47,7 +47,7 @@ const BibleviewerApp = () => {
   const showCloseButton = isPlaying && missingHeight
 
   useEffect(() => {
-    apiGetStorage(`${gospelOfJohnObjBPlus.uniqueID}.completed`).then((value) => {
+    apiGetStorage(`${curSerie.uniqueID}.completed`).then((value) => {
       if (value && value.length>0) setCompletedList(value)
     }).catch((err) => console.error(err))
   },[])
@@ -55,7 +55,7 @@ const BibleviewerApp = () => {
   const localSetCompletedList = (inx) => {
     setCompletedList((prev) => {
       const newList = (prev && prev.length>0) ? uniqueArray([...prev,inx]) : [inx]
-      apiSetStorage(`${gospelOfJohnObjBPlus.uniqueID}.completed`,newList)
+      apiSetStorage(`${curSerie.uniqueID}.completed`,newList)
       return newList
     })
   }
@@ -99,15 +99,12 @@ const BibleviewerApp = () => {
       }
     }
   }
+  const handleClose = () => onClose && onClose()
  
   return (
     <div style={defaultBackgroundStyle}>
       <ThemeProvider theme={theme}>
-        {showCloseButton ? <ClosePlayAppBar/> : <CustomAppBar/>}
-        {/* <TileItem
-          item={curObj}
-          infoTile={true}
-        /> */}
+        {showCloseButton ? <ClosePlayAppBar/> : <CustomAppBar onClose={handleClose} lng={lng}/>}
         <div
           style={{
             width: '100%',
@@ -116,7 +113,7 @@ const BibleviewerApp = () => {
           }}
         >
           <img
-            src={t("John.ImgId")}
+            src={t("John.ImgId",{lng})}
             style={{
               width: '100%',
               // float: props.float,
@@ -124,6 +121,7 @@ const BibleviewerApp = () => {
             }}
           />
           <PlanEpisode
+            lng={lng}
             curSerie={curSerie}
             expanded={showBiblePassage}
             navigationDate={navigationDate}

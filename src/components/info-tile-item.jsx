@@ -16,7 +16,7 @@ const NewlineText = ({text}) => text.split('\n').map((line,i) => (
   </span>
 ))
 
-const InfoTileItem = ({item,curEp,expanded,mTop,onClickPlay,onClickExpand}) => {
+const InfoTileItem = ({item,curEp,expanded,mTop,onClickPlay,onClickExpand,lng}) => {
   const { t } = useTranslation()
   const expandIcon = expanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>
   return (
@@ -36,7 +36,7 @@ const InfoTileItem = ({item,curEp,expanded,mTop,onClickPlay,onClickExpand}) => {
           <Typography
             sx={{pl: 0.5, pt: 1.5,fontWeight: 600,fontSize: '110%'}}
           >
-            {t(item.title)}
+            {t(item.title,{lng})}
           </Typography>
         </Grid>
         <Grid item>
@@ -54,9 +54,9 @@ const InfoTileItem = ({item,curEp,expanded,mTop,onClickPlay,onClickExpand}) => {
           </IconButton>
         </Grid>
       </Grid>
-      {expanded && <Typography sx={{pt: 0.5,fontWeight: 100,fontSize: '85%',width: '100%'}}><NewlineText text={t(item.description)}/></Typography>}
-      {curEp && <Typography sx={{pl: 0.5, pt: 1,fontWeight: 600,fontSize: '90%'}}>{t(curEp.title)}</Typography>}
-      {curEp && curEp.descr && (t(curEp.descr) !== curEp.descr) && <Typography sx={{pt: 0.5,fontWeight: 100,fontSize: '85%',width: '100%'}}><NewlineText text={t(curEp.descr)}/></Typography>}
+      {expanded && <Typography sx={{pt: 0.5,fontWeight: 100,fontSize: '85%',width: '100%'}}><NewlineText text={t(item.description,{lng})}/></Typography>}
+      {curEp && <Typography sx={{pl: 0.5, pt: 1,fontWeight: 600,fontSize: '90%'}}>{t(curEp.title,{lng})}</Typography>}
+      {curEp && curEp.descr && (t(curEp.descr,{lng}) !== curEp.descr) && <Typography sx={{pt: 0.5,fontWeight: 100,fontSize: '85%',width: '100%'}}><NewlineText text={t(curEp.descr,{lng})}/></Typography>}
       <div/>
     </Box>
   )

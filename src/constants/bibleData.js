@@ -1,4 +1,4 @@
-export const bibleData = {
+export const bibleDataEN = {
   "bibleBookList": [
       "Gen",
       "Exod",
