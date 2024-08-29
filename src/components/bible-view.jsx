@@ -1,9 +1,10 @@
 import React from 'react'
 import { BookPreview } from "@oce-editor-tools/base"
-import { usfmText } from '../constants/John.usfm.en.js'
+import { usfmText as usfmTextEn } from '../constants/John.usfm.en.js'
+import { usfmText as usfmTextDe } from '../constants/John.usfm.de.js'
 import { rangeArray, arrayToObject } from '../utils/obj-functions'
 
-const BibleView = ({curEp}) => {
+const BibleView = ({curEp,lng}) => {
   const renderFlags = {
     showHeadings: false,
     showTitles: false,
@@ -16,6 +17,10 @@ const BibleView = ({curEp}) => {
     showCharacterMarkup: true,  
   };
 
+  const lngUsfmList = {
+    en: usfmTextEn,
+    de: usfmTextDe
+  }
   const getBcvFilter = (ep) => {
     const vArray = rangeArray(ep?.begin?.v,ep?.end?.v).map((val) => {
       return { inx: val }
@@ -38,13 +43,12 @@ const BibleView = ({curEp}) => {
   const isValidEp = !!curEp?.begin?.ch && !!curEp?.begin?.v && !!curEp?.end?.v 
 
   const previewProps = {
-    usfmText,
+    usfmText: lngUsfmList[lng],
     renderFlags,
     bcvFilter: isValidEp ? getBcvFilter(curEp) : undefined,
     verbose: true,
   }
 
-  
   return (
       <div key="1">
         {isValidEp && <BookPreview {...previewProps} />}

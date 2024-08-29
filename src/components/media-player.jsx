@@ -7,6 +7,11 @@ import Sound from './sound'
 import useMediaPlayer from "../hooks/useMediaPlayer"
 import useBrowserData from '../hooks/useBrowserData'
 import { useTranslation } from 'react-i18next'
+import { freeAudioIdOsisMap } from '../constants/osisFreeAudiobible'
+import { audiobibleOsisId, osisIdAudiobibleTitle } from '../constants/osisAudiobibleId'
+// import { chExceptionList_DE_TJ_HJ, underscoreExceptionList_DE_TJ_HJ, fnameList_DE_TJ_HJ } from '../constants/fnameList'
+import { fnameList_DE_ML } from '../constants/fnameList'
+import { isEmptyObj, pad } from '../utils/obj-functions'
 import {apiObjGetStorage,apiObjSetStorage} from '../utils/api'
 
 let styles = {
@@ -82,9 +87,8 @@ const Footer = () => {
   const [curPos, setCurPos] = useState()
   const [curDur, setCurDur] = useState()
   const storePos = (msPos) => apiObjSetStorage(curPlay,"mSec",msPos)
-  // const ytbURL = "https://www.youtube.com/watch?v=xEK-0n88zSI" // English
+  const ytbURL = "https://www.youtube.com/watch?v=xEK-0n88zSI" // English
   // const ytbURL = "https://www.youtube.com/watch?v=MpGiPo8UuVk" // Deutsch / German
-  const ytbURL = t("videoURL.YT")
   // const restorePos = async (obj) => {
   //   await apiObjGetStorage(obj,"mSec").then((value) => {
   //     if (value==null){
@@ -271,6 +275,14 @@ console.log("handleFinishedPlaying")
     handleFinishedVideoPlaying()
   }
 
+  const getIndexOfBibleBook = (bk) => {
+    let retVal = undefined
+    Object.keys(osisIdAudiobibleTitle ).forEach((key, index) => {
+      if (key===bk) retVal = index +1
+    })
+    return pad(retVal)
+  }
+
   const topMargin = 60
 
   let curHeight = Math.trunc(width*9/16)
@@ -291,13 +303,18 @@ console.log("handleFinishedPlaying")
     return (curSerie &&(curSerie.mediaType===type))
   }
   const videoFound = typeFound("vid")
-  const audioFound = typeFound("audio")
+  let audioFound = typeFound("audio")
+  const bibleFound = typeFound("bible")
   const btnStyle =  Object.assign({}, styles.floatingButton)
   let idStr = "footer"
   if ((curPlay!=null)) {
+    let bibleObj
+    if ((curEp!=null)&&(curEp.bibleType)) {
+      bibleObj = curEp
+    }
     locPath = locURL
     if (videoFound && (curEp!=null)) {
-      locURL = ytbURL
+      locURL = curSerie?.listYtbURL[curSerie?.language]
       locPath = locURL
     } else if ((curEp!=null)&&(curEp.filename!=null)) {
       locURL = curEp.filename
@@ -306,9 +323,51 @@ console.log("handleFinishedPlaying")
     }
     locPath = locURL
 //    locPath = getLocalMediaFName(locURL)
-  }
-  if (videoFound){
-    idStr = "footer-video"
+    if (videoFound){
+      idStr = "footer-video"
+    } else if (bibleFound) {
+      locURL = ""
+      if (!isEmptyObj(bibleObj)){
+        const {bk,id} = bibleObj
+        let idStr = pad(id)
+        let curFName
+        if (curSerie.audioTreasureType) {
+          let bBookId = osisIdAudiobibleTitle[bk]
+          if (bk==="Ps") {
+            bBookId = "Psalm"
+            if (id<100) {
+              idStr = "0" +pad(id)
+            }
+          }
+          curFName = `${curSerie.curPath}${getIndexOfBibleBook(bk)}_${bBookId}_${idStr}.mp3`
+        } else if (curSerie.audioBible_de_ML) {
+          let bBookId = fnameList_DE_ML[bk]
+          if (id<100) {
+            idStr = "0" +pad(id)
+          }
+          curFName = `${curSerie.curPath}${getIndexOfBibleBook(bk)}${idStr}-${bBookId}_Kapitel-${idStr}.mp3`
+        // } else if (curSerie.audioBible_de_TJ_HJ) {
+        //   let bBookId = fnameList_DE_TJ_HJ[bk]
+          // chExceptionList_DE_TJ_HJ 
+          // underscoreExceptionList_DE_TJ_HJ
+        } else if (curSerie.freeType) {
+            if ((bk==="Ps") && (id<100)){
+            idStr = "0" +pad(id)
+          }
+          curFName = curSerie.curPath + "/"
+                            + freeAudioIdOsisMap[bk] + idStr + ".mp3"
+        } else {
+          curFName = curSerie.curPath + "/"
+          curSerie.pathPattern && curSerie.pathPattern.forEach(part => {
+            curFName += getPatternContent(part,bk,idStr)
+          })
+        }
+        locURL = curFName
+        locPath = locURL
+        console.log(locPath)
+        audioFound = true
+      }
+    }
   }
   const fullSizeFound = videoFound
   const isFB = curEp && curEp.fb

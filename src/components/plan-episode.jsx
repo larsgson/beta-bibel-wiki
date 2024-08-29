@@ -58,6 +58,8 @@ Item.propTypes = {
   ]),
 };
 
+// Navigation up (maybe onClose?)
+
 const PlanEpisode = (props) => {
   const {
     curSerie,
@@ -71,6 +73,7 @@ const PlanEpisode = (props) => {
     onNewNavigationDate,
     onClickPrev,
     onClickNext,
+    lng
   } = props
   const { t } = useTranslation()
   const { curPlay } = useMediaPlayer()
@@ -182,14 +185,14 @@ const PlanEpisode = (props) => {
           </Box>
         </div>
       </Grid>
-      {curEp && <Typography sx={{pl: 0.5, pt: 1,fontWeight: 400,fontSize: '110%'}}>{t(curEp.title)}</Typography>}
-      {curEp && curEp.descr && <Typography sx={{pl: 0.5, pt: 0.5,fontWeight: 100,fontSize: '85%',width: '100%'}}><NewlineText text={t(curEp.descr)}/></Typography>}
+      {curEp && <Typography sx={{pl: 0.5, pt: 1,fontWeight: 400,fontSize: '110%'}}>{t(curEp.title,{lng})}</Typography>}
+      {curEp && curEp.descr && <Typography sx={{pl: 0.5, pt: 0.5,fontWeight: 100,fontSize: '85%',width: '100%'}}><NewlineText text={t(curEp.descr,{lng})}/></Typography>}
       <Grid container alignItems="center" spacing={2}>
         <Grid item>
           <Typography
             sx={{pl: 0.5, fontWeight: 400,fontSize: '90%'}}
           >
-            {t(curSerie.title) + ` ${curEp?.begin?.ch},${curEp?.begin?.v}-${curEp?.end?.v}`}
+            {t(curSerie.title,{lng}) + ` ${curEp?.begin?.ch},${curEp?.begin?.v}-${curEp?.end?.v}`}
           </Typography>
         </Grid>
         <Grid item>
@@ -212,6 +215,7 @@ const PlanEpisode = (props) => {
       {expanded && (
         <div sx={{pt: 0.5,fontWeight: 100,fontSize: '85%',width: '100%'}}>
           <BibleView
+            lng={lng}
             curEp={curEp}
           />
           <br/>

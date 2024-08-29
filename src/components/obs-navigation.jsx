@@ -163,19 +163,14 @@ const OBSNavigation = (props) => {
   }
   return (
     <div>
-      {!rootLevel && (
-        <Fab
-          onClick={handleReturn}
-          color="primary"
-        >
-          <ChevronLeft />
-        </Fab>
-      )}
+      <Fab
+        onClick={handleReturn}
+        color="primary"
+      >
+        <ChevronLeft />
+      </Fab>
       {(curLevel<=2) && (
       <>
-        <Typography
-          type="title"
-        >OBS Navigation</Typography>
         <ImageList
           rowHeight={rowHeight}
           cols={useCols}
