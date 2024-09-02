@@ -19,7 +19,6 @@ import { bibleDataEN, bibleDataDE_ML_1912 } from '../constants/bibleData'
 import { naviSortOrder, chInBook,
           naviBooksLevel1, naviBooksLevel2, naviChapters } from '../constants/naviChapters'
 import DailyTeaserView from './daily-teaser-view'
-import { gospelOfJohnObjBPlus } from '../constants/readingPlan'
 
 const topObjList = [
   {
@@ -107,11 +106,7 @@ const BibleNavigation = (props) => {
   const { size, largeScreen } = useBrowserData()
   // const { curPlay } = useMediaPlayer()
   const { t } = useTranslation()
-  const { onExitNavigation, onStartPlay, onClickGospelJohn } = props
-  const curSerie = {...gospelOfJohnObjBPlus, language: "de"}
-  const firstDateOfPlan = Date.parse(curSerie.beginDate)
-  const dateNow = Date.now()
-  const navigationDate = dateNow;
+  const { onExitNavigation, onStartPlay } = props
 
   const [curLevel, setCurLevel] = useState(0)
   const [level0, setLevel0] = useState("")

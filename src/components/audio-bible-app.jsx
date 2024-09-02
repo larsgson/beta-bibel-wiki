@@ -17,8 +17,6 @@ const defaultBackgroundStyle = {
   color: 'whitesmoke',
 }
 
-// !!! ToDo: Fix Johannes Hörbibel click !
-
 const AudioBibleNavigationApp = () => {
   // eslint-disable-next-line no-unused-vars
   const { curPlay, startPlay } = useMediaPlayer()
