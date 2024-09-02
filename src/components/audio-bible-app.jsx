@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import BibleNavigation from './bible-navigation'
-import GospelJohnNavi from './gospel-john-video-navi'
 import useMediaPlayer from '../hooks/useMediaPlayer'
 
 const theme = createTheme({
@@ -17,6 +16,8 @@ const defaultBackgroundStyle = {
   padding: 0,
   color: 'whitesmoke',
 }
+
+// !!! ToDo: Fix Johannes Hörbibel click !
 
 const AudioBibleNavigationApp = () => {
   // eslint-disable-next-line no-unused-vars
