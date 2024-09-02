@@ -18,7 +18,7 @@ import OBSPictureNavigationApp from './obs-viewer-app'
 import { bibleDataEN, bibleDataDE_ML_1912 } from '../constants/bibleData'
 import { naviSortOrder, chInBook,
           naviBooksLevel1, naviBooksLevel2, naviChapters } from '../constants/naviChapters'
-
+import DailyTeaserView from './daily-teaser-view'
 
 const topObjList = [
   {
@@ -106,7 +106,8 @@ const BibleNavigation = (props) => {
   const { size, largeScreen } = useBrowserData()
   // const { curPlay } = useMediaPlayer()
   const { t } = useTranslation()
-  const { onExitNavigation, onStartPlay, onClickGospelJohn } = props
+  const { onExitNavigation, onStartPlay } = props
+
   const [curLevel, setCurLevel] = useState(0)
   const [level0, setLevel0] = useState("")
   const [level1, setLevel1] = useState(1)
@@ -200,15 +201,11 @@ const BibleNavigation = (props) => {
       setLevel1(id)
       setCurLevel(2)
     } else if (curLevel===2) {
-      if ((level1==="7") && (id==="d")) {
-        onClickGospelJohn()
-      } else {
-        setLevel2(id)
-        if (naviChapters[level1][id].length===1){
-          setLevel3(0)
-          setCurLevel(4)
-        } else setCurLevel(3)  
-      }
+      setLevel2(id)
+      if (naviChapters[level1][id].length===1){
+        setLevel3(0)
+        setCurLevel(4)
+      } else setCurLevel(3)  
     } else if (curLevel===3) {
       setLevel3(id)
       setCurLevel(4)
@@ -323,9 +320,18 @@ const BibleNavigation = (props) => {
           <ChevronLeft />
         </Fab>
       )}
-      <Typography
+      {(naviType==="audioBible") && (<Typography
         type="title"
-      >Bible Navigation</Typography>
+      >Today</Typography>)}
+      {(naviType==="audioBible") && (
+        <DailyTeaserView
+          onClick={() => handleClick(undefined,"en-jhn-plan")} 
+          lng={"en"}
+        />      
+      )}
+      {(naviType==="audioBible") && (<Typography
+        type="title"
+      >Bibel Wiki</Typography>)}
       {(naviType==="videoPlan") && <BibleviewerApp onClose={handleClose} lng={lng}/>}
       {(naviType==="videoSerie") && <GospelJohnNavi onClose={handleClose} lng={lng}/>}
       {(naviType==="audioStories") && <OBSPictureNavigationApp onClose={handleClose}/>}

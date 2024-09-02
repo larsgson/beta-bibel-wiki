@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import BibleNavigation from './bible-navigation'
-import GospelJohnNavi from './gospel-john-video-navi'
 import useMediaPlayer from '../hooks/useMediaPlayer'
 
 const theme = createTheme({
