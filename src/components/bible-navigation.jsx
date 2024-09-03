@@ -320,15 +320,25 @@ const BibleNavigation = (props) => {
           <ChevronLeft />
         </Fab>
       )}
-      {(naviType==="audioBible") && (<Typography
+      {rootLevel && (naviType==="audioBible") && (<Typography
         type="title"
       >Today</Typography>)}
-      {(naviType==="audioBible") && (
+      {rootLevel && (naviType==="audioBible") && (
         <DailyTeaserView
           onClick={() => handleClick(undefined,"en-jhn-plan")} 
           lng={"en"}
         />      
       )}
+      {/* ToDo: implement this !!! */}
+      {/* {rootLevel && (naviType==="audioBible") && (<Typography
+        type="title"
+      >My List</Typography>)}
+      {rootLevel && (naviType==="audioBible") && (
+        <HistoryView
+          onClick={(serieIdStr,epId) => handleHistoryClick(serieIdStr,epId)} 
+          lng={lng}
+        />      
+      )} */}
       {(naviType==="audioBible") && (<Typography
         type="title"
       >Bibel Wiki</Typography>)}
