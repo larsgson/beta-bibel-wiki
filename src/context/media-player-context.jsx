@@ -135,15 +135,15 @@ console.log("onFinishedPlaying")
           console.error(err)
         })
       }
-      const curSerId = unique(curSerie.title)
-// navHist is not yet fully implemented
-//      const navHist = {...state.navHist, [curSerId]: epIdStr}
-//      await updateStorage("navHist",navHist)
+      const curSerId = curSerie.uniqueID || unique(curSerie.title)
+      // navHist is not yet fully implemented
+      const navHist = {...state.navHist, [curSerId]: tmpEp?.id}
+      await updateStorage("navHist",navHist)
       await updateStorage("curSerId",curSerId)
-//      setState(state => ({...state, navHist,  curSerId, curSerie, curEp: tmpEp}))
       const curInx = tmpEp?.id
       const syncImgSrc = updateImgBasedOnPos( curInx, 0 )
-      setState(state => ({...state, syncImgSrc, curSerId, curSerie, curEp: tmpEp}))
+      setState(state => ({...state, navHist, syncImgSrc, curSerId, curSerie, curEp: tmpEp}))
+      // setState(state => ({...state, syncImgSrc, curSerId, curSerie, curEp: tmpEp}))
     }
   }
 

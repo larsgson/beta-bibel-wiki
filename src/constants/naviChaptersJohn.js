@@ -264,6 +264,7 @@ export const gospelOfJohnObj = {
   })),
   title: "John",
   description: "John.Descr",
+  uniqueID: "Jesus.net.John.serie",
   image: {
     origin: "ImgId",
     filename: "John.ImgId"

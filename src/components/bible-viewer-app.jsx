@@ -112,14 +112,6 @@ const BibleviewerApp = ({onClose,lng}) => {
             marginTop: 2
           }}
         >
-          <img
-            src={t("John.ImgId",{lng})}
-            style={{
-              width: '100%',
-              // float: props.float,
-              marginTop: 0
-            }}
-          />
           <PlanEpisode
             lng={lng}
             curSerie={curSerie}
