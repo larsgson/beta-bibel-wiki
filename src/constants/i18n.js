@@ -2283,7 +2283,7 @@ And where can you be the one to pave a way for Jesus for people around you?`,
 How has Jesus taken away the sins in your life and how does this fact affect you in your daily life?`,
 "John.1.35.descr": `Andrew brings his brother Simon to Jesus to show him the Savior. And in the next verses, Philip will tell Nathanael about Jesus and ask him to see Jesus for himself (1:46).
 Is there someone in your life that you can bring to Jesus?
-Who you can invite to come along and see for themselves?`,
+Maybe somebody you can invite to come along and see for themselves?`,
 "John.1.43.descr": `Whatever happened there under the fig tree, Nathanael knows that Jesus "saw" him.
 Have you experienced Jesus seeing and knowing you in a similar way?
 What impact did this have on your faith?`,
@@ -2322,7 +2322,8 @@ Is it enough for you to have the bread of life in Jesus (6:41)?`,
 "John.6.48.descr": `Jesus provokes the Jews of that time by asking them to eat his flesh and drink his blood.
 Could there be more here than just a reference to the Lord's Supper? In this case, what?`,
 "John.6.60.descr": `What prevents people today from following Jesus?
-Compare verse 66. "It is the Spirit who gives life." This verse is like petrol in the tank of a Christian's life.
+Compare verse 66. "It is the Spirit who gives life." 
+This verse is like petrol in the tank of a Christian's life.
 What helps you to continually fill your spiritual life with God's words?`,
 "John.6.67.descr": `What would you answer Jesus if he asked you this question?
 Compare verse 67.
@@ -2335,7 +2336,6 @@ What does this fact trigger in you?
 Practical obedience, as described in verse 17, allows the divine inspiration of the Word of God to be experienced as a reality in our lives.
 What experiences have you had with this?`,
 "John.7.25.descr": `The dispute over the "real" Messiah is coming to a head: The opponents cannot cope with Jesus and his provocative and yet mysterious words.
-Will Israel still accept Jesus?
 Will we use the time we have left to live properly?`,
 "John.7.37.descr": `What parallels are contained in verses 17 and 38?
 Why is this emphasis on Jesus so important? Whoever drinks from this source, i.e. trusts or obeys Jesus, becomes a source for others.
@@ -2428,13 +2428,13 @@ Stand up and let us go from here.
 What does that mean in the context of the Last Supper back then and what does it mean for you today?`,
 "John.15.1.descr": `Jesus says that He is the true vine and we are the branches (15:1-2). If we remain in Him, we will bear much fruit.
 When was the last time you consciously experienced that you remained in Jesus and that fruit came from it?
-What does it mean for you to be "circumcised" by Jesus so that you can bear more fruit (15:2)?`,
+What does it mean for you to be "pruned" by Jesus so that you can bear more fruit (15:2)?`,
 "John.15.9.descr": `Jesus calls us to remain in his love and keep his commandments in order to experience joy (15:9-11).
 How do you experience the joy that comes from obeying his commandments?
 What does it mean for you in practical terms to love one another as Jesus loved us (15:12)?`,
 "John.15.18.descr": `Jesus warns his disciples that the world will hate them because they are not of the world, just as He is not of the world (15:18-19).
 Have you ever experienced hostility or rejection because you believe in Jesus? 16:1-4 How do you deal with this, and how does knowing that Jesus has already predicted this help you?`,
-"John.16.5.descr": `Jesus promises his disciples the Holy Spirit, who will lead them into all truth (16:13).
+"John.16.5.descr": `Jesus promises the Holy Spirit to his disciples, who will lead them into all truth (16:13).
 In which situations have you felt the guidance of the Holy Spirit particularly clearly in your life?
 How can you rely more on the Holy Spirit and learn from him in everyday life?`,
 "John.16.16.descr": `Jesus speaks about his impending departure and the reunion, which will bring great joy to the disciples (16:22).
@@ -2466,7 +2466,7 @@ Then they put a purple robe on him: Kings and rulers often wore purple because t
 "John.19.6.descr": `Jesus chooses his words carefully and speaks only a few words. These words are all the more impressive when we analyze Pilate's reactions closely.
 How do you handle your words? Do you make a lot of words about nothing or do you choose appropriate and true words?
 Are you able to speak up when it comes to your identity in Christ?`,
-"John.19.17.descr": `"Jesus of Nazareth, the King of the Jews". The identity of Jesus and his role in human history was controversial from the beginning. The Jews did not want him as king and rejected his origins. Nevertheless, Jesus remains who he is.
+"John.19.17.descr": `"Jesus of Nazareth, the King of the Jews". The identity of Jesus and his role in human history was controversial from the beginning. Some of the jewish rulers did not want him as king and rejected his origins. Nevertheless, Jesus remains who he is.
 Is Jesus also your king?
 How do you behave towards your King - and do you need to change your attitude and approach towards him?`,
 "John.19.28.descr": `"It is finished!" He has done it for you. Salvation is due to God's actions alone.
@@ -2492,7 +2492,7 @@ Jesus meets Thomas in the way he needs. Do you also have doubts?
 Then don't stop at this point, but go in search of answers. Jesus will meet you and your doubts can lead to a deepening of your faith.`,
 "John.20.30.descr": `John summarizes his intention again:
 He wrote down the work of Jesus so that we can believe and have life through faith (20:31).
-How has reading the Gospel of John in the last few weeks strengthened your faith?
+How has reading and watching the Gospel of John in the last few weeks strengthened your faith?
 Tell someone about your experience and your experiences.`,
 "John.21.1.descr": `What a beautiful scene:
 After all the hustle and bustle of the last few days, Jesus prepares breakfast for his disciples and invites them to sit down and eat with him.
@@ -2925,7 +2925,6 @@ Was löst diese Tatsache in dir aus?
 Praktischer Gehorsam, wie in Vers 17 beschrieben, lässt die göttliche Inspiration des Wortes Gottes in unserem Leben als Realität erfahrbar werden. 
 Welche Erfahrungen hast du damit gemacht?`,
 "John.7.25.descr": `Der Streit um den "echten" Messias spitzt sich zu: Die Gegner werden mit Jesus und seinen provokativen und doch geheimnisvollen Worten nicht fertig. 
-Wird Israel Jesus noch aufnehmen? 
 Werden wir unsere noch verbleibende Lebensfrist richtig nutzen?`,
 "John.7.37.descr": `Welche Parallelen sind in Vers 17 und 38 enthalten? 
 Warum wohl ist diese Betonung Jesus so wichtig? Wer aus dieser Quelle trinkt, d.h. Jesus vertraut bzw. ihm gehorcht, wird selbst für andere zur Quelle. 
@@ -3057,7 +3056,7 @@ Dann legten sie ihm einen Purpurmantel um: Könige und Herrscher trugen oft Purp
 "John.19.6.descr": `Jesus wählt seine Worte mit Bedacht und spricht nur wenige Worte. Diese Worte sind dafür umso eindrucksvoller, wenn wir die Reaktionen von Pilatus genau analysieren. 
 Wie gehst du mit deinen Worten um? Machst du viele Worte um Nichts oder wählst du treffende und wahre Worte? 
 Bist du sprachfähig, wenn es um die Identität von Jesus geht?`,
-"John.19.17.descr": `"Jesus von Nazaret, der König der Juden". Die Identität Jesu und seine Rolle in der Menschheistgeschichte war von Beginn an umstritten. Die Juden wollten ihn nicht als König und lehnten seine Herkunft ab. Dennoch bleibt Jesus, wer er ist. 
+"John.19.17.descr": `"Jesus von Nazaret, der König der Juden". Die Identität Jesu und seine Rolle in der Menschheistgeschichte war von Beginn an umstritten. Einige der Juden wollten ihn nicht als König und lehnten seine Herkunft ab. Dennoch bleibt Jesus, wer er ist. 
 Ist Jesus auch dein König? 
 Wie verhältst du dich deinem König gegenüber - und müsstest du etwas an deiner Haltung und Einstellung ihm gegenüber ändern?`,
 "John.19.28.descr": `"Es ist vollbracht!" Er hat es für dich vollbracht. Die Erlösung ist allein auf Gottes Tun zurückzuführen. 
