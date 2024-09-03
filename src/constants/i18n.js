@@ -2102,7 +2102,7 @@ const enLocList = {
   John: "John",
   JohnLongTitle: "The Gospel of John",
   "videoURL.YT": "https://www.youtube.com/watch?v=xEK-0n88zSI",
-  "John.ImgId": "img/john-pics/VB-John1v14.jpg",
+  "John.ImgId": "img/john-pics/VB-John1v3.jpg",
   "John.Descr":
     "John’s Gospel begins with a poetic introduction that places the story of Jesus within the wider story of the Word of God. A word is a form of communication, and the story stresses ways in which God speaks to the world through Jesus. \nThis Gospel helps us into the relationship of trust in God, like we were created for and which is true life. \nJesus communicates the will of God by the words he speaks, by the miracles he performs, by the death he dies in love for others, and by rising to life. The miracles recorded in John’s gospel are written that the reader would believe in Jesus and find life in His name. \nJesus appears in the role of a human being, which means that he is an example for other people to follow. As a typical human being, he possessed no extraordinary power that is not available to anyone else who asks for it and who meets the conditions for receiving it.",
   "John.1.ImgId": "img/john-pics/VB-John1v14.jpg",
@@ -2686,7 +2686,7 @@ const deLocList = {
   John: "Johannes",
   JohnLongTitle: "Das Johannesevangelium",
   "videoURL.YT": "https://www.youtube.com/watch?v=MpGiPo8UuVk",
-  "John.ImgId": "DasJohannesevangelium.jpg",
+  "John.ImgId": "/img/john-pics/VB-John1v3.jpg",
   "John.Descr":
     "John’s Gospel begins with a poetic introduction that places the story of Jesus within the wider story of the Word of God. A word is a form of communication, and the story stresses ways in which God speaks to the world through Jesus. \nThis Gospel helps us into the relationship of trust in God, like we were created for and which is true life. \nJesus communicates the will of God by the words he speaks, by the miracles he performs, by the death he dies in love for others, and by rising to life. The miracles recorded in John’s gospel are written that the reader would believe in Jesus and find life in His name. \nJesus appears in the role of a human being, which means that he is an example for other people to follow. As a typical human being, he possessed no extraordinary power that is not available to anyone else who asks for it and who meets the conditions for receiving it.",
     "John.1.ImgId": "img/john-pics/VB-John1v14.jpg",
