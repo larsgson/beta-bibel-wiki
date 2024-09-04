@@ -329,6 +329,7 @@ const BibleNavigation = (props) => {
           lng={"en"}
         />      
       )}
+      {/* ToDo: implement close button on appBar, like BPlus !!! */}
       {/* ToDo: implement this !!! */}
       {/* {rootLevel && (naviType==="audioBible") && (<Typography
         type="title"
