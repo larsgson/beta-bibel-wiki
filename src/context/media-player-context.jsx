@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback  } from 'react'
-import { apiSetStorage, apiObjGetStorage, apiObjSetStorage } from '../utils/api'
+import { apiSetStorage, apiGetStorage, apiObjGetStorage, apiObjSetStorage } from '../utils/api'
 import { unique } from 'shorthash'
 import { pad } from '../utils/obj-functions'
 
@@ -37,6 +37,14 @@ const MediaPlayerProvider = (props) => {
     }
     getDataForAllStories()
   }, [fetchJSONDataFrom]);
+
+  useEffect(() => {
+    const getNavHist = async () => {
+      const navHist = await apiGetStorage("navHist")
+      setState(prev => ({...prev, navHist}))
+    }
+    getNavHist()
+  }, []);
 
   const togglePlay = () => {
 //    state.isPlaying ? player.pause() : player.play()

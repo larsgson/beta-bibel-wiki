@@ -104,7 +104,7 @@ const BibleviewerApp = ({onClose,lng}) => {
   return (
     <div style={defaultBackgroundStyle}>
       <ThemeProvider theme={theme}>
-        {showCloseButton ? <ClosePlayAppBar/> : <CustomAppBar onClose={handleClose} lng={lng}/>}
+        {showCloseButton ? <ClosePlayAppBar/> : (!isPlaying) && <CustomAppBar onClose={handleClose} lng={lng}/>}
         <div
           style={{
             width: '100%',
@@ -120,7 +120,7 @@ const BibleviewerApp = ({onClose,lng}) => {
             completedList={completedList}
             daysSinceFirst={daysSinceFirst}
             firstDateOfPlan={firstDateOfPlan}  
-            onClickClose={() => props.onClickClose()}
+            onClickClose={handleClose}
             onClickMenuBookIcon={() => props.onClickMenuBookIcon()}
             onNewNavigationDate={(newDate) => handleNewNavigationDate(newDate)}
             onClickPlay={(inx,curSer,curEp) => handlePlay(inx,curSer,curEp)}
