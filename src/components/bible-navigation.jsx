@@ -11,8 +11,9 @@ import { rangeArray } from '../utils/obj-functions'
 import { osisIconId, osisIconList } from '../constants/osisIconList'
 import { getOsisChTitle, getChoiceTitle } from '../constants/osisChTitles'
 import useBrowserData from '../hooks/useBrowserData'
-// import useMediaPlayer from "../hooks/useMediaPlayer"
+import useMediaPlayer from "../hooks/useMediaPlayer"
 import BibleviewerApp from './bible-viewer-app'
+import HistoryView from './history-view'
 import GospelJohnNavi from './gospel-john-video-navi'
 import OBSPictureNavigationApp from './obs-viewer-app'
 import { bibleDataEN, bibleDataDE_ML_1912 } from '../constants/bibleData'
@@ -20,50 +21,43 @@ import { naviSortOrder, chInBook,
           naviBooksLevel1, naviBooksLevel2, naviChapters } from '../constants/naviChapters'
 import DailyTeaserView from './daily-teaser-view'
 
-const topObjList = [
-  {
+const topObjList = {
+  "de-jhn-serie": {
     title: "Das Johannesevangelium",
-    key: "de-jhn-serie",
     imgSrc: "/navIcons/VB-John1v1.png",
     subtitle: "Videoserie"
   },
-  {
+  "en-jhn-serie": {
     title: "Gospel of John",
-    key: "en-jhn-serie",
     imgSrc: "/navIcons/VB-John1v1.png",
     subtitle: "Video serie"
   },
-  {
+  "de-jhn-plan": {
     title: "Das Johannesevangelium",
-    key: "de-jhn-plan",
     imgSrc: "/navIcons/VB-John1v3.png",
     subtitle: "täglich - in 90 Tagen"
   },
-  {
+  "en-jhn-plan": {
     title: "Gospel of John",
-    key: "en-jhn-plan",
     imgSrc: "/navIcons/VB-John1v3.png",
     subtitle: "daily - in 90 days"
   },
-  {
+  "de-audio-bible-ML": {
     title: "Hörbibel",
-    key: "de-audio-bible-ML",
     imgSrc: "/navIcons/40_Mt_03_08.png",
     subtitle: "einfach zum Navigieren"
   },
-  {
+  "en-audio-bible-WEB": {
     title: "Audio Bible",
-    key: "en-audio-bible-WEB",
     imgSrc: "/navIcons/40_Mt_08_12.png",
     subtitle: "with easy navigation"
   },
-  {
+  "en-audio-OBS": {
     title: "Audio Bible Stories",
-    key: "en-audio-OBS",
     imgSrc: "/navIcons/Bible_NT.png",
     subtitle: "with easy navigation"
-  },
-]
+  }
+}
           
 const useSerie = {
   "de-audio-bible-ML": bibleDataDE_ML_1912,
@@ -104,7 +98,7 @@ const SerieGridBar = (props) => {
 const BibleNavigation = (props) => {
   // eslint-disable-next-line no-unused-vars
   const { size, largeScreen } = useBrowserData()
-  // const { curPlay } = useMediaPlayer()
+  const { navHist } = useMediaPlayer()
   const { t } = useTranslation()
   const { onExitNavigation, onStartPlay } = props
 
@@ -243,7 +237,12 @@ const BibleNavigation = (props) => {
   let validIconList = []
   let validBookList = []
   if (curLevel===0){
-    validIconList = topObjList
+    validIconList = Object.keys(topObjList).map((key) => {
+      return {
+        ...topObjList[key],
+        key
+      }
+    })
   } else if (curLevel===1){
     let lastInx
     const curSerie = useSerie[level0]
@@ -309,6 +308,7 @@ const BibleNavigation = (props) => {
   const rootLevel = (curLevel===0)
   const naviType = serieNaviType[level0] || "audioBible"
   const lng = serieLang[level0]
+  const myList = navHist && Object.keys(navHist) || []
   return (
     <div>
       {!rootLevel && (naviType==="audioBible") && (
@@ -329,17 +329,19 @@ const BibleNavigation = (props) => {
           lng={"en"}
         />      
       )}
-      {/* ToDo: implement close button on appBar, like BPlus !!! */}
-      {/* ToDo: implement this !!! */}
-      {/* {rootLevel && (naviType==="audioBible") && (<Typography
+      {/* ToDo - introduce listing this and allow navigation - enter at the right place!!!
+      // Maybe some kind of hierarchical path navigation across everything?
+      {rootLevel && (myList.length>0) && (<Typography
         type="title"
-      >My List</Typography>)}
-      {rootLevel && (naviType==="audioBible") && (
+      >My List</Typography>)} */}
+      {rootLevel && (myList.length>0) && (
         <HistoryView
-          onClick={(serieIdStr,epId) => handleHistoryClick(serieIdStr,epId)} 
+          onClick={() => console.log("onClick")} 
+          // onClick={(serieIdStr,epId) => handleHistoryClick(serieIdStr,epId)} 
+          epList={myList}
           lng={lng}
         />      
-      )} */}
+      )}
       {(naviType==="audioBible") && (<Typography
         type="title"
       >Bibel Wiki</Typography>)}
