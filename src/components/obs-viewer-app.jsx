@@ -17,7 +17,7 @@ const defaultBackgroundStyle = {
   color: 'whitesmoke',
 }
 
-const OBSPictureNavigationApp = ({onClose}) => {
+const OBSPictureNavigationApp = ({topIdStr,onClose}) => {
   const mPlayObj = useMediaPlayer()
   const { startPlay, isPaused, syncImgSrc } = mPlayObj
 
@@ -25,7 +25,7 @@ const OBSPictureNavigationApp = ({onClose}) => {
     const useInx = id-1
     if (curSerie?.episodeList) {
       if ((useInx>=0) && (useInx<curSerie?.episodeList?.length)) {
-        startPlay(id,curSerie,curSerie.episodeList[useInx])
+        startPlay(topIdStr,id,curSerie,curSerie.episodeList[useInx])
       }
     }
   }

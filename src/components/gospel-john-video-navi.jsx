@@ -4,7 +4,7 @@ import CustomAppBar from './app-bar'
 import { gospelOfJohnObj } from '../constants/naviChaptersJohn'
 import useMediaPlayer from "../hooks/useMediaPlayer"
 
-const GospelJohnNavi = ({onClose, lng}) => {
+const GospelJohnNavi = ({onClose, topIdStr, lng}) => {
   const { startPlay } = useMediaPlayer()
   const [showDescr,setShowDescr] = useState(false)
   const handleShowDescr = (ev,val) => {
@@ -13,10 +13,10 @@ const GospelJohnNavi = ({onClose, lng}) => {
   }
   const curObj = {...gospelOfJohnObj, language: lng }
   const handleClose = () => onClose && onClose()
-  const handlePlay = (ev) => {
+  const handlePlay = (ev,curSerEp) => {
     ev.stopPropagation()
     if (startPlay!=null) {
-      startPlay(0,curObj)
+      startPlay(topIdStr,0,curObj,curSerEp)
     }
   }
   const showEpList = curObj.episodeList
@@ -25,12 +25,13 @@ const GospelJohnNavi = ({onClose, lng}) => {
       <CustomAppBar onClose={handleClose} lng={lng}/>
       <TileItem
         item={curObj}
+        topIdStr={topIdStr}
         mTop={0}
         lng={lng}
         expanded={showDescr}
         infoTile={true}
         epList={showEpList}
-        onClickPlay={(e) => handlePlay(e)}
+        onClickPlay={(e,curSerieEp) => handlePlay(e,curSerieEp)}
         onClickExpand={(e) => handleShowDescr(e,!showDescr)}
       />
     </div>

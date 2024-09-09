@@ -41,11 +41,11 @@ const DailyTeaserView = ({onClick,lng}) => {
         const endVerseNbr = ((endCh>1)?verseSumCh[endCh-2] : 0) + tmpEp.end.v
         tmpEp.begTimeSec = verseSec[begVerseNbr]
         tmpEp.endTimeSec = verseSec[endVerseNbr]
-        startPlay(inx,curSer,tmpEp)
+        startPlay(undefined,inx,curSer,tmpEp)
       } else { // Assume that these are chapter episodes  
         ep.begTimeSec = verseSec[((ep?.id>0)?verseSumCh[ep?.id-1] : 0)]
         ep.endTimeSec = verseSec[verseSumCh[ep?.id]]
-        if (ep) startPlay(inx,curSer,ep)
+        if (ep) startPlay(undefined,inx,curSer,ep)
       }
     }
   }

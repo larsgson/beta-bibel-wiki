@@ -26,7 +26,7 @@ const DailyTeaser = (props) => {
         cols={1}
       >
       <ImageListItem
-        key={curEp.id}
+        key={curEp?.id}
         cols={1}
         rows={1}
         onClick={(ev) => handleClickPlay(episodeNumber,curSerie,curEp)}
@@ -40,8 +40,8 @@ const DailyTeaser = (props) => {
             mTop={0}
           />
         <ItemBar
-          title={t(curEp.title,{lng})}
-          descr={t(curSerie.title,{lng}) + ` ${curEp?.begin?.ch},${curEp?.begin?.v}-${curEp?.end?.v}`}
+          title={t(curEp?.title,{lng})}
+          descr={t(curSerie?.title,{lng}) + ` ${curEp?.begin?.ch},${curEp?.begin?.v}-${curEp?.end?.v}`}
           // useIcon={useIcon}
           // bkgrd={bkgrd}
           // percentVal={percentVal}

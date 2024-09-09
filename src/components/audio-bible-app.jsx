@@ -20,10 +20,10 @@ const defaultBackgroundStyle = {
 const AudioBibleNavigationApp = () => {
   // eslint-disable-next-line no-unused-vars
   const { curPlay, startPlay } = useMediaPlayer()
-  const handleStartBiblePlay = (curSerie,bookObj,id) => {
+  const handleStartBiblePlay = (topIdStr,curSerie,bookObj,id) => {
     const {bk} = bookObj
-    const curEp = {bibleType: true,bk,id}
-    startPlay(id,curSerie,curEp)
+    const curEp = {bibleType: true,bk,bookObj,id}
+    startPlay(topIdStr,id,curSerie,curEp)
   }
   return (
     <div style={defaultBackgroundStyle}>

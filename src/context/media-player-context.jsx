@@ -112,7 +112,7 @@ console.log("onFinishedPlaying")
     await apiSetStorage(idStr,val)
   }
 
-  const startPlay = async (inx,curSerie,curEp) => {
+  const startPlay = async (topIdStr,inx,curSerie,curEp) => {
     if (!curSerie){ // stop playing
       let newPlayObj
       setStateKeyVal( "curPlay", newPlayObj)
@@ -144,8 +144,8 @@ console.log("onFinishedPlaying")
         })
       }
       const curSerId = curSerie.uniqueID || unique(curSerie.title)
-      // navHist is not yet fully implemented
-      const navHist = {...state.navHist, [curSerId]: tmpEp?.id}
+      const navHistEp = {...tmpEp,topIdStr}
+      const navHist = {...state.navHist, [curSerId]: navHistEp}
       await updateStorage("navHist",navHist)
       await updateStorage("curSerId",curSerId)
       const curInx = tmpEp?.id
