@@ -11,7 +11,7 @@ const GospelJohnNavi = ({onClose, topIdStr, lng}) => {
     ev.stopPropagation()
     setShowDescr(val)
   }
-  const curObj = {...gospelOfJohnObj, language: lng }
+  const curObj = {...gospelOfJohnObj, language: lng}
   const handleClose = () => onClose && onClose()
   const handlePlay = (ev,curSerEp) => {
     ev.stopPropagation()
