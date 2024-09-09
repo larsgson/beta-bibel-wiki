@@ -415,8 +415,24 @@ export const gospelOfJohnObjBPlus = {
           filename
         }
       }  
-    } else {
-      
+    } else { // ToDo: Implement using all treeNode objects, not just the first one !!!
+      const useObj0 = obj.treeNode[0]
+      const begin = useObj0.begin
+      const end = useObj0.end
+      const ch = useObj0.begin.ch
+      const v = useObj0.begin.v
+      const filename = getImgSrcString(ch,v)
+      return {
+        id: inx,
+        title: `John.${ch}.${v}`,
+        descr: `John.${ch}.${v}.descr`,
+        begin,
+        end,
+        image: {
+          origin: "Local",
+          filename
+        }
+      }        
     }
   }),
   title: "John",

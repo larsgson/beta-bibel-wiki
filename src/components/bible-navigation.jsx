@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Fab from '@mui/material/Fab'
+import Home from '@mui/icons-material/Home'
 import ChevronLeft from '@mui/icons-material/ChevronLeft'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
@@ -20,6 +21,7 @@ import { bibleDataEN, bibleDataDE_ML_1912 } from '../constants/bibleData'
 import { naviSortOrder, chInBook,
           naviBooksLevel1, naviBooksLevel2, naviChapters } from '../constants/naviChapters'
 import DailyTeaserView from './daily-teaser-view'
+import { gospelOfJohnObj } from '../constants/naviChaptersJohn'
 
 const topObjList = {
   "de-jhn-serie": {
@@ -62,6 +64,8 @@ const topObjList = {
 const useSerie = {
   "de-audio-bible-ML": bibleDataDE_ML_1912,
   "en-audio-bible-WEB": bibleDataEN,
+  "de-jhn-serie": gospelOfJohnObj,
+  "en-jhn-serie": gospelOfJohnObj,
 }
 
 const serieLang = {
@@ -98,12 +102,12 @@ const SerieGridBar = (props) => {
 const BibleNavigation = (props) => {
   // eslint-disable-next-line no-unused-vars
   const { size, largeScreen } = useBrowserData()
-  const { navHist } = useMediaPlayer()
+  const { navHist, startPlay } = useMediaPlayer()
   const { t } = useTranslation()
   const { onExitNavigation, onStartPlay } = props
 
   const [curLevel, setCurLevel] = useState(0)
-  const [level0, setLevel0] = useState("")
+  const [level0, setLevel0] = useState("audioBible")
   const [level1, setLevel1] = useState(1)
   const [level2, setLevel2] = useState("")
   const [level3, setLevel3] = useState("")
@@ -204,10 +208,10 @@ const BibleNavigation = (props) => {
       setLevel3(id)
       setCurLevel(4)
     } else {
-      const bookObj = naviChapters[level1][level2][level3]
+      const bookObj = {...naviChapters[level1][level2][level3], level1, level2, level3}
       const curSerie = useSerie[level0]
       // const {curSerie} = curPlay  
-      onStartPlay(curSerie,bookObj,id)
+      onStartPlay(level0,curSerie,bookObj,id)
     }
   }
 
@@ -217,6 +221,29 @@ const BibleNavigation = (props) => {
     } else {
       setCurLevel(level)
       if (level===0) setLevel0("audioBible")
+    }
+  }
+
+  const navigateHome = () => {
+    setCurLevel(0)
+    setLevel0("audioBible")
+  }
+
+  const handleHistoryClick = (obj) => {
+    console.log(obj)
+    const useLevel0 = obj?.ep?.topIdStr
+    const curSerie = useSerie[useLevel0]
+    setLevel0(useLevel0)
+    if (serieNaviType[useLevel0] === "audioBible") {
+      setLevel1(obj?.ep?.bookObj?.level1)
+      setLevel2(obj?.ep?.bookObj?.level2)
+      setLevel3(obj?.ep?.bookObj?.level3)
+      setCurLevel(4)
+      const bObj = obj?.ep?.bookObj
+      onStartPlay(useLevel0,curSerie,bObj,obj?.ep?.id)
+    } else if (serieNaviType[useLevel0] === "videoSerie") {
+      setCurLevel(1)
+      startPlay(useLevel0,obj?.ep?.id,curSerie,obj?.ep)
     }
   }
 
@@ -246,7 +273,7 @@ const BibleNavigation = (props) => {
   } else if (curLevel===1){
     let lastInx
     const curSerie = useSerie[level0]
-    const curList = (curSerie!=null) ? curSerie.bibleBookList : []
+    const curList = (curSerie!=null && curSerie.bibleBookList) ? curSerie.bibleBookList : []
     Object.keys(naviBooksLevel1).sort((a,b)=>getSort(a)-getSort(b)
     ).forEach(iconInx => {
       const foundList = naviBooksLevel1[iconInx].filter(x => curList.includes(x))
@@ -308,9 +335,51 @@ const BibleNavigation = (props) => {
   const rootLevel = (curLevel===0)
   const naviType = serieNaviType[level0] || "audioBible"
   const lng = serieLang[level0]
-  const myList = navHist && Object.keys(navHist) || []
+  const myList = navHist && Object.keys(navHist).filter(key => {
+    const navObj = navHist[key]
+    const useLevel0 = navObj?.topIdStr
+    return ((serieNaviType[useLevel0] === "audioBible") || ((serieNaviType[useLevel0] === "videoSerie")))
+  }).map(key => {
+    const navObj = navHist[key]
+    const useLevel0 = navObj?.topIdStr
+    // if ((useLevel0 === "en-audio-bible-WEB") || (useLevel0 === "de-audio-bible-ML")) {
+    if (serieNaviType[useLevel0] === "audioBible") {
+      const useLevel1 = navObj?.bookObj?.level1
+      const useLevel2 = navObj?.bookObj?.level2
+      const useBObj = navObj?.bookObj
+      const useCh = navObj?.id
+      const epObj = getChIcon(useCh,useLevel1,useLevel2,useBObj,useCh)
+      return {
+        key,
+        id: key,
+        imageSrc: epObj.imgSrc,
+        title: epObj.title,
+        descr: epObj.subtitle,
+        ep: navHist[key]
+      }
+    } else if (serieNaviType[useLevel0] === "videoSerie") {
+      const useLng = serieLang[useLevel0]
+      return {
+        key,
+        id: key,
+        image: navObj.image,
+        title: t(navObj.title, { lng: useLng }),
+        descr: t(navObj.descr, { lng: useLng }),
+        ep: navHist[key]
+      }
+    }
+  }) || []
   return (
     <div>
+      {(naviType==="audioBible") && (curLevel>1) && (
+        <Fab
+          onClick={navigateHome}
+          // className={largeScreen ? classes.exitButtonLS : classes.exitButton}
+          color="primary"
+        >
+          <Home/>
+        </Fab>
+      )}
       {!rootLevel && (naviType==="audioBible") && (
         <Fab
           onClick={handleReturn}
@@ -329,15 +398,12 @@ const BibleNavigation = (props) => {
           lng={"en"}
         />      
       )}
-      {/* ToDo - introduce listing this and allow navigation - enter at the right place!!!
-      // Maybe some kind of hierarchical path navigation across everything?
       {rootLevel && (myList.length>0) && (<Typography
         type="title"
-      >My List</Typography>)} */}
+      >My List</Typography>)}
       {rootLevel && (myList.length>0) && (
         <HistoryView
-          onClick={() => console.log("onClick")} 
-          // onClick={(serieIdStr,epId) => handleHistoryClick(serieIdStr,epId)} 
+          onClick={(item) => handleHistoryClick(item)} 
           epList={myList}
           lng={lng}
         />      
@@ -345,9 +411,9 @@ const BibleNavigation = (props) => {
       {(naviType==="audioBible") && (<Typography
         type="title"
       >Bibel Wiki</Typography>)}
-      {(naviType==="videoPlan") && <BibleviewerApp onClose={handleClose} lng={lng}/>}
-      {(naviType==="videoSerie") && <GospelJohnNavi onClose={handleClose} lng={lng}/>}
-      {(naviType==="audioStories") && <OBSPictureNavigationApp onClose={handleClose}/>}
+      {(naviType==="videoPlan") && <BibleviewerApp onClose={handleClose} topIdStr={level0} lng={lng}/>}
+      {(naviType==="videoSerie") && <GospelJohnNavi onClose={handleClose} topIdStr={level0} lng={lng}/>}
+      {(naviType==="audioStories") && <OBSPictureNavigationApp topIdStr={level0} onClose={handleClose}/>}
       {(naviType==="audioBible") && (<ImageList
         rowHeight="auto"
         cols={useCols}

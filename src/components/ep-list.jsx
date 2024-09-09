@@ -15,7 +15,7 @@ import { verseSec } from '../constants/TimeCodes'
 import { verseSumCh } from '../constants/naviChaptersJohn'
 
 const EpList = (props) => {
-  const { serie, navButton, useIcon, epList, imgSrc, lng } = props
+  const { serie, navButton, useIcon, epList, imgSrc, topIdStr, lng } = props
   const [expanded,setExpanded] = useState(!navButton)
   const {size, width, height} = useBrowserData()
   const { t } = useTranslation()
@@ -49,11 +49,11 @@ const EpList = (props) => {
         const endVerseNbr = ((endCh>1)?verseSumCh[endCh-2] : 0) + tmpEp.end.v
         tmpEp.begTimeSec = verseSec[begVerseNbr]
         tmpEp.endTimeSec = verseSec[endVerseNbr]
-        startPlay(0,item,tmpEp)
+        startPlay(topIdStr,0,item,tmpEp)
       } else { // Assume that these are chapter episodes  
         ep.begTimeSec = verseSec[((ep.id>0)?verseSumCh[ep.id-1] : 0)]
         ep.endTimeSec = verseSec[verseSumCh[ep.id]]
-        startPlay(0,item,ep)
+        startPlay(topIdStr,0,item,ep)
       }
     }
   }
