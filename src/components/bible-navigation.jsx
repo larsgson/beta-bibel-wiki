@@ -107,7 +107,7 @@ const BibleNavigation = (props) => {
   const { onExitNavigation, onStartPlay } = props
 
   const [curLevel, setCurLevel] = useState(0)
-  const [level0, setLevel0] = useState("audioBible")
+  const [level0, setLevel0] = useState()
   const [level1, setLevel1] = useState(1)
   const [level2, setLevel2] = useState("")
   const [level3, setLevel3] = useState("")
@@ -232,8 +232,8 @@ const BibleNavigation = (props) => {
   const handleHistoryClick = (obj) => {
     console.log(obj)
     const useLevel0 = obj?.ep?.topIdStr
-    const curSerie = useSerie[useLevel0]
     setLevel0(useLevel0)
+    const curSerie = {...useSerie[useLevel0], language: serieLang[useLevel0] }
     if (serieNaviType[useLevel0] === "audioBible") {
       setLevel1(obj?.ep?.bookObj?.level1)
       setLevel2(obj?.ep?.bookObj?.level2)
