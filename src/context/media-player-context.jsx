@@ -203,8 +203,6 @@ console.log("onFinishedPlaying")
       }
       // This serie has episodes
       let newPlayObj = {curSerie,curEp}
-      console.log({topIdStr,inx,curSerie,curEp})
-
       if (curEp!=null){
 //          props.onStartPlay && props.onStartPlay(curSerie,curEp)
         await apiObjSetStorage({curSerie},"curEp",curEp.id)
