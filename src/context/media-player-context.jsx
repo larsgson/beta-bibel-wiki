@@ -119,7 +119,6 @@ console.log("onFinishedPlaying")
           const firstId = pad(parseInt(useCh))
           const firstEntry = checkObj[useCh][0]
           checkIcon = osisIconId[bk] + "_" + firstId + "_" + firstEntry
-          console.log(checkIcon)
         }
       }
 // Book Icon - To Do - to be added in the future
