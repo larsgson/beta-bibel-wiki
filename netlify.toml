@@ -13,7 +13,7 @@
 
 [[redirects]]
   from = "/en"
-  to = "bibel-wiki.netlify.app"
+  to = "bibel-wiki.netlify.app/:splat"
   status = 200
   force = true
 
