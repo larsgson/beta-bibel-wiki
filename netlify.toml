@@ -12,8 +12,8 @@
   #  status = 200
 
 [[redirects]]
-  from = "/en"
-  to = "bibel-wiki.netlify.app/:splat"
+  from = "/en/*"
+  to = "https://bibel-wiki.netlify.app/:splat"
   status = 200
   force = true
 
